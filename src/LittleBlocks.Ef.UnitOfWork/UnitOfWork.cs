@@ -74,18 +74,16 @@ namespace LittleBlocks.Ef.UnitOfWork
 
         public async Task<int> SaveChangesAsync(bool ensureAutoHistory = false, params IUnitOfWork[] unitOfWorks)
         {
-            using (var ts = new TransactionScope())
-            {
-                var tasks = unitOfWorks.Select(async unitOfWork => await unitOfWork.SaveChangesAsync(ensureAutoHistory)).ToList();
-                var results = await Task.WhenAll(tasks);
+            using var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+            var tasks = unitOfWorks.Select(async unitOfWork => await unitOfWork.SaveChangesAsync(ensureAutoHistory)).ToList();
+            var results = await Task.WhenAll(tasks);
                 
-                var count = results.Sum();
-                count += await SaveChangesAsync(ensureAutoHistory);
+            var count = results.Sum();
+            count += await SaveChangesAsync(ensureAutoHistory);
 
-                ts.Complete();
+            ts.Complete();
 
-                return count;
-            }
+            return count;
         }
 
         public void Dispose()
