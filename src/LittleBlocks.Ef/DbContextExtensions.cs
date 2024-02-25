@@ -35,7 +35,7 @@ public static class DbContextExtensions
     public static IServiceCollection AddSqlDbContext<TDbContext>(this IServiceCollection services,
         string connectionString, Action<SqlServerDbContextOptionsBuilder> sqlOptionsAction) where TDbContext : DbContext
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
+        ArgumentNullException.ThrowIfNull(services);
 
         services.AddDbContext<TDbContext>(options => options.UseSqlServer(connectionString, sqlOptionsAction));
         services.AddUnitOfWork<TDbContext>();

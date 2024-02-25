@@ -6,8 +6,8 @@ namespace LittleBlocks.Ef.UnitOfWork.Extensions
 
         public PagingOptions(int pageIndex, int pageSize = DefaultPageSize)
         {
-            if (pageSize <= 0) throw new ArgumentOutOfRangeException(nameof(pageSize));
-            if (pageIndex <= 0) throw new ArgumentOutOfRangeException(nameof(pageIndex));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pageSize);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pageIndex);
 
             PageIndex = pageIndex;
             PageSize = pageSize;

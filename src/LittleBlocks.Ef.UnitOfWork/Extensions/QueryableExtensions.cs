@@ -4,25 +4,25 @@ namespace LittleBlocks.Ef.UnitOfWork.Extensions
     {
         public static IQueryable<T> PagedBy<T>(this IQueryable<T> queryable, PagingOptions options)
         {
-            if (queryable == null) throw new ArgumentNullException(nameof(queryable));
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            ArgumentNullException.ThrowIfNull(queryable);
+            ArgumentNullException.ThrowIfNull(options);
 
             return queryable.PagedBy(options.PageIndex, options.PageSize);
         }
 
         public static IQueryable<T> PagedBy<T>(this IQueryable<T> queryable, int pageIndex, int pageSize)
         {
-            if (queryable == null) throw new ArgumentNullException(nameof(queryable));
-            if (pageIndex < 0) throw new ArgumentOutOfRangeException(nameof(pageIndex));
-            if (pageSize <= 0) throw new ArgumentOutOfRangeException(nameof(pageSize));
+            ArgumentNullException.ThrowIfNull(queryable);
+            ArgumentOutOfRangeException.ThrowIfNegative(pageIndex);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pageSize);
 
             return queryable.Skip(pageIndex * pageSize).Take(pageSize);
         }        
         
         public static IQueryable<TResult> ProjectTo<T, TResult>(this IQueryable<T> queryable, Func<T, TResult> projection)
         {
-            if (queryable == null) throw new ArgumentNullException(nameof(queryable));
-            if (projection == null) throw new ArgumentNullException(nameof(projection));
+            ArgumentNullException.ThrowIfNull(queryable);
+            ArgumentNullException.ThrowIfNull(projection);
 
             return queryable.Select(m => projection(m));
         }

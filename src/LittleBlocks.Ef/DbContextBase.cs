@@ -17,14 +17,10 @@
 
 namespace LittleBlocks.Ef;
 
-public abstract class DbContextBase : DbContext
+public abstract class DbContextBase(DbContextOptions options, IOperationContext operationContext)
+    : DbContext(options)
 {
-    private readonly IOperationContext _operationContext;
-
-    protected DbContextBase(DbContextOptions options, IOperationContext operationContext) : base(options)
-    {
-        _operationContext = operationContext ?? throw new ArgumentNullException(nameof(operationContext));
-    }
+    private readonly IOperationContext _operationContext = operationContext ?? throw new ArgumentNullException(nameof(operationContext));
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
