@@ -30,7 +30,7 @@ public static class PrincipalExtensions
         if (!string.IsNullOrWhiteSpace(identity.Name))
             return identity.Name;
 
-        if (!(identity is ClaimsIdentity claimsIdentity))
+        if (identity is not ClaimsIdentity claimsIdentity)
             return AnonymousUser;
 
         var claim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);

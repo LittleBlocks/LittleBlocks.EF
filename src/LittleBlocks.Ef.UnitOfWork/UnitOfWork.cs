@@ -23,14 +23,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace LittleBlocks.Ef.UnitOfWork
 {
-    public sealed class UnitOfWork<TContext> : IRepositoryFactory, IUnitOfWork<TContext> where TContext : DbContext
+    public sealed class UnitOfWork<TContext>(TContext context) : IRepositoryFactory, IUnitOfWork<TContext>
+        where TContext : DbContext
     {
         private bool _disposed;
         private Dictionary<Type, object> _repositories;
 
-        public UnitOfWork(TContext context) => DbContext = context ?? throw new ArgumentNullException(nameof(context));
-
-        public TContext DbContext { get; }
+        public TContext DbContext { get; } = context ?? throw new ArgumentNullException(nameof(context));
 
         public IRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository = false) where TEntity : class
         {

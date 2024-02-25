@@ -14,6 +14,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extras", "Extras", "{966C50CB-3F74-442F-842D-164645690476}"
 	ProjectSection(SolutionItems) = preProject
 		..\GitVersion.yml = ..\GitVersion.yml
+		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
+		..\.github\workflows\ci.yml = ..\.github\workflows\ci.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LittleBlocks.Ef.UnitOfWork", "LittleBlocks.Ef.UnitOfWork\LittleBlocks.Ef.UnitOfWork.csproj", "{E9B92105-F4C6-42B5-B3CF-64FA80486E93}"
